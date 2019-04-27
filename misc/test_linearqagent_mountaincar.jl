@@ -18,8 +18,7 @@ function test_run(α=0.5/32, ϵ=0.01, γ=1.0, tilings=32, tiles=2; n_episodes=10
 
     lu = Learning.LinearRL.WatkinsQ(α)
     policy = EpsilonGreedyQPolicy(ϵ, 1:3)
-    agent = Agent.TileCoderAgent(lu, size_env_state, num_actions, tilings, tiles, γ, policy)
-
+    agent = LinearAgents.TileCoderAgent(lu, size_env_state, num_actions, tilings, tiles, γ, policy)
 
     rng = Random.MersenneTwister(seed)
     env = MountainCar(rng)
@@ -31,13 +30,13 @@ function test_run(α=0.5/32, ϵ=0.01, γ=1.0, tilings=32, tiles=2; n_episodes=10
         num_steps = 0
         cumulative_reward = 0
         _, state = start!(env; rng=rng)
-        action = Agent.start!(agent, state; rng=rng)
+        action = start!(agent, state; rng=rng)
         while !terminal
 
             # print(num_steps, "\r")
             _, state_prime, reward, terminal = step!(env, action; rng=rng)
 
-            action = Agent.step!(agent, state_prime, reward, terminal; rng=rng)
+            action = step!(agent, state_prime, reward, terminal; rng=rng)
             # println(action)
             # println(reward)
             num_steps += 1

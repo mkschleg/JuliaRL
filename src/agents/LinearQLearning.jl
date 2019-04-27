@@ -1,4 +1,10 @@
 
+module LinearAgents
+
+import ..JuliaRL: step!, start!, get_action
+
+import ..AbstractAgent
+
 import ..FeatureCreators
 import ..Learning
 
@@ -8,6 +14,8 @@ import ..AbstractQPolicy
 import ..get
 
 using Random
+
+export LinearQAgent, TileCoderAgent, get_action, start!, step!
 
 mutable struct LinearQAgent{QT<:AbstractQFunction, FC<:AbstractFeatureCreator, P<:AbstractQPolicy, T<:Number} <: AbstractAgent
     Q::QT
@@ -22,7 +30,7 @@ mutable struct LinearQAgent{QT<:AbstractQFunction, FC<:AbstractFeatureCreator, P
         new{QT, FC, P, feature_type(Q)}(Q, fc, π, γ, lu, zeros(feature_type(Q), feature_size(fc)), zeros(feature_type(Q), feature_size(fc)), 0)
 end
 
-get_action(agent::LinearQAgent, ϕ; rng=Random.GLOBAL_RNG) = get(agent.π, [agent.Q(ϕ, a) for a = agent.π.actions]; rng=rng)
+get_action(agent::LinearQAgent, ϕ; rng=Random.GLOBAL_RNG, kwargs...) = get(agent.π, [agent.Q(ϕ, a) for a = agent.π.actions]; rng=rng)
 
 function start!(agent::LinearQAgent, env_s_tp1; rng=Random.GLOBAL_RNG, kwargs...)
 
@@ -67,5 +75,7 @@ function TileCoderAgent(opt::LearningUpdate,
     Q = Learning.LinearRL.ActionSparseQFunction(
         num_features_per_action,
         num_actions)
-    return Agent.LinearQAgent(Q, fc, policy, γ, opt)
+    return LinearQAgent(Q, fc, policy, γ, opt)
+end
+
 end
