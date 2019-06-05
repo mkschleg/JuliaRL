@@ -1,7 +1,7 @@
 name = "JuliaRL"
 uuid = "10ec99bc-e54b-11e8-04da-8598ad081a85"
 authors = ["Matt <mkschleg@gmail.com>"]
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 Conda = "8f4d0f93-b110-5947-807f-2305c1781a2d"
