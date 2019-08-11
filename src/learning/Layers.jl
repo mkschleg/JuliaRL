@@ -1,5 +1,17 @@
 
 
+
+# Update a normal Flux Model!
+
+function update!(model, opt, loss)
+    grads = Flux.gradient(()->loss, params(model))
+    for weights in params(model)
+        Flux.Optimise.update!(opt, weights, grads[weights])
+    end
+end
+
+
+
 mutable struct SingleLayer{F, FP, A}
     σ::F
     σ′::FP
