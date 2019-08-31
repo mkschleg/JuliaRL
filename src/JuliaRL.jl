@@ -8,8 +8,8 @@ greet() = println("Hello Reinforcement Learning!")
 export
     AbstractEnvironment,
     AbstractAgent,
-    start, start!,
-    step, step!
+    start!,
+    step!
 
 include("core/environment.jl")
 include("core/agent.jl")
