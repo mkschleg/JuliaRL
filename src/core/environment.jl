@@ -60,7 +60,7 @@ end
 
 Update the state of the environment based on the underlying dynamics and the action. This is not used directly, but through the step function.
 """
-function environment_step!(env::AbstractEnvironment, action; rng::AbstractRNG=Random.GLOBAL_RNG, kwargs...)
+function environment_step!(env::AbstractEnvironment, action, rng::AbstractRNG=Random.GLOBAL_RNG; kwargs...)
     @error "Implement environment_step for environment $(typeof(env))"
 end
 
