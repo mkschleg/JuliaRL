@@ -1,6 +1,8 @@
 
 module JuliaRL
 
+using Random
+using Logging
 
 greet() = println("Hello Reinforcement Learning!")
 

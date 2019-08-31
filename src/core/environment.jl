@@ -1,7 +1,4 @@
 
-using Random: AbstractRNG
-using Logging
-
 
 """
 Represents an abstract environment for reinforcement learning agents. Has several functions that need to be implemented to work
