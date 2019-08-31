@@ -5,9 +5,11 @@ module JuliaRL
 greet() = println("Hello Reinforcement Learning!")
 
 
-
-
-export start, start!, step, step!
+export
+    AbstractEnvironment,
+    AbstractAgent,
+    start, start!,
+    step, step!
 
 include("core/environment.jl")
 include("core/agent.jl")
