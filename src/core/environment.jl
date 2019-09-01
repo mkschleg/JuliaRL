@@ -11,13 +11,19 @@ abstract type AbstractEnvironment end
 
 Function to start the passed environment `env`.
 """
-function start!(env::AbstractEnvironment, rng::AbstractRNG=Random.GLOBAL_RNG; kwargs...)
-    reset!(env, rng=rng; kwargs...)
+
+function start!(env::AbstractEnvironment; kwargs...)
+    reset!(env, Random.GLOBAL_RNG; kwargs...)
     return get_state(env)
 end
 
-function start!(env::AbstractEnvironment, start_state, rng::AbstractRNG=Random.GLOBAL_RNG; kwargs...)
-    reset!(env, start_state, rng=rng; kwargs...)
+function start!(env::AbstractEnvironment, start_state; kwargs...)
+    reset!(env, start_state; kwargs...)
+    return get_state(env)
+end
+
+function start!(env::AbstractEnvironment, rng::AbstractRNG; kwargs...)
+    reset!(env, rng; kwargs...)
     return get_state(env)
 end
 
@@ -27,8 +33,14 @@ end
 
 Update the state of the passed environment `env` based on the underlying dynamics and the action.
 """
-function step!(env::AbstractEnvironment, action, rng::AbstractRNG=Random.GLOBAL_RNG; kwargs...) # -> env, state, reward, terminal
-    environment_step!(env, action, rng=rng; kwargs...)
+
+function step!(env::AbstractEnvironment, action; kwargs...) # -> env, state, reward, terminal
+    environment_step!(env, action; kwargs...)
+    return get_state(env), get_reward(env), is_terminal(env)
+end
+
+function step!(env::AbstractEnvironment, action, rng::AbstractRNG; kwargs...) # -> env, state, reward, terminal
+    environment_step!(env, action, rng; kwargs...)
     return get_state(env), get_reward(env), is_terminal(env)
 end
 
@@ -43,11 +55,15 @@ end
 
 Reset the environment to initial conditions based on the random number generator.
 """
-function reset!(env::AbstractEnvironment, rng::AbstractRNG=Random.GLOBAL_RNG; kwargs...)
+function reset!(env::AbstractEnvironment; kwargs...)
+    reset!(env::AbstractEnvironment, Random.GLOBAL_RNG; kwargs...)
+end
+
+function reset!(env::AbstractEnvironment, start_state; kwargs...)
     @error "Implement reset! for environment $(typeof(env))"
 end
 
-function reset!(env::AbstractEnvironment, start_state, rng::AbstractRNG=Random.GLOBAL_RNG; kwargs...)
+function reset!(env::AbstractEnvironment, rng::AbstractRNG; kwargs...)
     @error "Implement reset! for environment $(typeof(env))"
 end
 
@@ -57,7 +73,12 @@ end
 
 Update the state of the environment based on the underlying dynamics and the action. This is not used directly, but through the step function.
 """
-function environment_step!(env::AbstractEnvironment, action, rng::AbstractRNG=Random.GLOBAL_RNG; kwargs...)
+
+function environment_step!(env::AbstractEnvironment, action; kwargs...)
+    environment_step!(env, action, Random.GLOBAL_RNG; kwargs...)
+end
+
+function environment_step!(env::AbstractEnvironment, action, rng::AbstractRNG; kwargs...)
     @error "Implement environment_step for environment $(typeof(env))"
 end
 
