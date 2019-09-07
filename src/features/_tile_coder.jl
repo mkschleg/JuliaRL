@@ -1,4 +1,4 @@
-module TileCoderImpl
+module TileCoding
 
 mutable struct IHT
     size::Integer
