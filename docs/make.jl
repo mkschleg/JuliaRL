@@ -11,8 +11,8 @@ makedocs(
          "Documentation" => Any[
              "Environments" => "docs/environments.md"
              "Agents" => "docs/agents.md"
-             "Learning" => "docs/learning.md"
-             "Feature Creators" => "docs/feature_creators.md"
+             # "Learning" => "docs/learning.md"
+             # "Feature Creators" => "docs/feature_creators.md"
              ]
     ]
 )
