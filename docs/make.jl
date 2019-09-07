@@ -17,7 +17,7 @@ makedocs(
     ]
 )
 
-deploydocs(
-    repo = "github.com/mkschleg/JuliaRL.jl.git",
-    devbranch = "master"
-)
+# deploydocs(
+#     repo = "github.com/mkschleg/JuliaRL.jl.git",
+#     devbranch = "master"
+# )

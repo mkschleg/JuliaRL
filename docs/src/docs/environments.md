@@ -5,6 +5,11 @@ CurrentModule = JuliaRL
 
 ```@docs
 AbstractEnvironment
+start!(env::AbstractEnvironment; kwargs...)
+start!(env::AbstractEnvironment, start_state; kwargs...)
+start!(env::AbstractEnvironment, rng::AbstractRNG; kwargs...)
+step!(env::AbstractEnvironment, action; kwargs...)
+step!(env::AbstractEnvironment, action, rng::AbstractRNG; kwargs...)
 ```
 
 The above functions take advantage of the following interface.

@@ -9,24 +9,27 @@ abstract type AbstractEnvironment end
 
 """
     start!(env::AbstractEnvironment; kwargs...)
-    start!(env::AbstractEnvironment, start_state; kwargs...)
-    start!(env::AbstractEnvironment, rng::AbstractRNG; kwargs...)
 
 Function to start the passed environment `env`. There are three variants. Two which start the environment from a random start state (as implemented with reset!) and another which starts the environment from a provided start state. These three variants call the `reset!` functions of the same call signiture.
 
 Returns the starting state of the environment.
 """
-
 function start!(env::AbstractEnvironment; kwargs...)
     reset!(env; kwargs...)
     return get_state(env)
 end
 
+"""
+    start!(env::AbstractEnvironment, start_state; kwargs...)
+"""
 function start!(env::AbstractEnvironment, start_state; kwargs...)
     reset!(env, start_state; kwargs...)
     return get_state(env)
 end
 
+"""
+    start!(env::AbstractEnvironment, rng::AbstractRNG; kwargs...)
+"""
 function start!(env::AbstractEnvironment, rng::AbstractRNG; kwargs...)
     reset!(env, rng; kwargs...)
     return get_state(env)
@@ -35,7 +38,6 @@ end
 
 """
    step!(env::AbstractEnvironment, action; kwargs...)
-   step!(env::AbstractEnvironment, action, rng::AbstractRNG; kwargs...)
 
 Update the state of the passed environment `env` based on the underlying dynamics and the action.
 """
@@ -44,6 +46,9 @@ function step!(env::AbstractEnvironment, action; kwargs...) # -> env, state, rew
     return get_state(env), get_reward(env), is_terminal(env)
 end
 
+"""
+step!(env::AbstractEnvironment, action, rng::AbstractRNG; kwargs...)
+"""
 function step!(env::AbstractEnvironment, action, rng::AbstractRNG; kwargs...) # -> env, state, reward, terminal
     environment_step!(env, action, rng; kwargs...)
     return get_state(env), get_reward(env), is_terminal(env)
