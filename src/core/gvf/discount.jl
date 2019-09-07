@@ -15,7 +15,7 @@ end
 
 Always returns a constant value γ
 """
-struct 
+struct ConstantDiscount{T} <: AbstractDiscount
     γ::T
 end
 

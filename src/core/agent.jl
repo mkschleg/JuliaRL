@@ -31,7 +31,7 @@ Function to take a step with an agent.
 Returns an action to get passed to the environment.
 """
 function step!(agent::AbstractAgent, env_s_tp1, r, terminal; kwargs...)
-    return step!(agent env_s_tp1, r, terminal, Random.GLOBAL_RNG; kwargs...)
+    return step!(agent, env_s_tp1, r, terminal, Random.GLOBAL_RNG; kwargs...)
 end
 
 """
