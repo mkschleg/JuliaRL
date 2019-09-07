@@ -37,7 +37,7 @@ end
 
 
 """
-   step!(env::AbstractEnvironment, action; kwargs...)
+    step!(env::AbstractEnvironment, action; kwargs...)
 
 Update the state of the passed environment `env` based on the underlying dynamics and the action.
 """
@@ -47,7 +47,7 @@ function step!(env::AbstractEnvironment, action; kwargs...) # -> env, state, rew
 end
 
 """
-step!(env::AbstractEnvironment, action, rng::AbstractRNG; kwargs...)
+    step!(env::AbstractEnvironment, action, rng::AbstractRNG; kwargs...)
 """
 function step!(env::AbstractEnvironment, action, rng::AbstractRNG; kwargs...) # -> env, state, reward, terminal
     environment_step!(env, action, rng; kwargs...)
