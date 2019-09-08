@@ -5,9 +5,39 @@ using Random
 
 import Base.get, Base.get!
 
+"""
+    GVFParamFuncs
+
+Module containing and the GVF parameter function types. Cleaner to keep these in a seperate namespace where the user can decide to `using` if desired.
+"""
+module GVFParamFuncs
+using ..Random
+using ..StatsBase
+using ..JuliaRL
+
+export
+    AbstractCumulant,
+    FeatureCumulant,
+    PredictionCumulant,
+    ScaledCumulant,
+    FunctionalCumulant
 include("gvf/cumulant.jl")
+
+export
+    AbstractDiscount,
+    ConstantDiscount,
+    StateTerminationDiscount
 include("gvf/discount.jl")
+
+export
+    AbstractPolicy,
+    NullPolicy,
+    PersistentPolicy,
+    RandomPolicy,
+    FucntionalPolicy
 include("gvf/policy.jl")
+
+end
 
 """
     AbstractGVF
@@ -48,7 +78,9 @@ function policy(gvf::AbstractGVF) end
 
 A realized version of a GVF where the cumulant, discount, and policies can be any structure following the AbstractCumulant, AbstractDiscount, or AbstractPolicy api respectively.
 """
-struct GVF{C<:AbstractCumulant, D<:AbstractDiscount, P<:AbstractPolicy} <: AbstractGVF
+struct GVF{C<:GVFParamFuncs.AbstractCumulant,
+           D<:GVFParamFuncs.AbstractDiscount,
+           P<:GVFParamFuncs.AbstractPolicy} <: AbstractGVF
     cumulant::C
     discount::D
     policy::P

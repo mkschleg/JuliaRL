@@ -7,7 +7,7 @@ using StatsBase
 """
 abstract type AbstractPolicy end
 
-function get(π::AbstractPolicy, state_t, action_t)
+function Base.get(π::AbstractPolicy, state_t, action_t)
     throw(DomainError("get(PolicyType, args...) not defined!"))
 end
 
@@ -18,7 +18,7 @@ Always returns 1.0
 """
 struct NullPolicy <: AbstractPolicy
 end
-get(π::NullPolicy, state_t, action_t) = 1.0
+Base.get(π::NullPolicy, state_t, action_t) = 1.0
 
 """
     PersistentPolicy <: AbstractPolicy
@@ -29,7 +29,7 @@ struct PersistentPolicy <: AbstractPolicy
     action::Int64
 end
 
-get(π::PersistentPolicy, state_t, action_t) =
+Base.get(π::PersistentPolicy, state_t, action_t) =
     π.action == action_t ? 1 : 0
 
 """
@@ -43,7 +43,7 @@ struct RandomPolicy{T<:AbstractFloat} <: AbstractPolicy
     RandomPolicy(probabilities::Array{T,1}) where {T<:AbstractFloat} = new{T}(probabilities, Weights(probabilities))
 end
 
-get(π::RandomPolicy, state_t, action_t) =
+Base.get(π::RandomPolicy, state_t, action_t) =
     π.probabilities[action_t]
 
 StatsBase.sample(π::RandomPolicy) = StatsBase.sample(Random.GLOBAL_RNG, π)

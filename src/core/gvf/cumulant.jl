@@ -17,7 +17,7 @@ struct FeatureCumulant <: AbstractCumulant
     idx::Int
 end
 
-get(cumulant::FeatureCumulant, state_tp1, action_tp1, preds_tp1) =
+Base.get(cumulant::FeatureCumulant, state_tp1, action_tp1, preds_tp1) =
     state_tp1[cumulant.idx]
 
 """
@@ -29,7 +29,7 @@ struct PredictionCumulant <: AbstractCumulant
     idx::Int
 end
 
-get(cumulant::PredictionCumulant, state_tp1, action_tp1, preds_tp1) =
+Base.get(cumulant::PredictionCumulant, state_tp1, action_tp1, preds_tp1) =
     preds_tp1[cumulant.idx]
 
 """
@@ -42,7 +42,7 @@ struct ScaledCumulant{F<:Number, T<:AbstractCumulant} <: AbstractCumulant
     cumulant::T
 end
 
-get(cumulant::ScaledCumulant, state_tp1, action_tp1, preds_tp1) =
+Base.get(cumulant::ScaledCumulant, state_tp1, action_tp1, preds_tp1) =
     cumulant.scale*get(cumulant.cumulant, state_tp1, action_tp1, preds_tp1)
 
 """
@@ -54,6 +54,6 @@ struct FunctionalCumulant{F<:Function} <: AbstractCumulant
     f::F
 end
 
-get(cumulant::FunctionalCumulant, state_tp1, action_tp1, preds_tp1) =
+Base.get(cumulant::FunctionalCumulant, state_tp1, action_tp1, preds_tp1) =
     cumulant.f(state_tp1, action_tp1, preds_tp1)
 

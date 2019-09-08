@@ -16,7 +16,7 @@ function getindex!(iht::IHT, obj::Array{Int64, 1}, readonly=false)
     if obj in keys(d)
         return d[obj]::Int64
     elseif readonly
-        return nothing
+        return -1
     end
     iht_size = capacity(iht)
     iht_count = count(iht)
@@ -25,7 +25,7 @@ function getindex!(iht::IHT, obj::Array{Int64, 1}, readonly=false)
             println("IHT full, starting to allow collisions")
         end
         iht.overfullCount += 1
-        return hash(obj) % capacity(iht)
+        return (hash(obj) % capacity(iht))::Int64
     end
     d[obj] = iht_count
     return iht_count
@@ -57,7 +57,7 @@ function tileswrap!(ihtORsize, numtilings, floats, wrapwidths, ints=[], readonly
     tiles = zeros(Int64, numtilings)
     for tiling = 1:numtilings
         tilingX2 = tiling*2
-        coords = convert(Array{Any}, [tiling])
+        coords = [tiling]::Array{Int64, 1}
         b = tiling
         for (q_idx, q) in enumerate(qfloats)
             width = nothing

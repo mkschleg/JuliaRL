@@ -9,12 +9,20 @@ greet() = println("Hello Reinforcement Learning!")
 
 export
     AbstractEnvironment,
+    get_actions,
+    get_reward,
+    is_terminal,
     AbstractAgent,
     start!,
     step!
 
 include("core/environment.jl")
 include("core/agent.jl")
+
+export
+    GVF,
+    Horde,
+    GVFParamFuncs
 include("core/gvf.jl")
 
 export
@@ -27,8 +35,9 @@ export
     TileCoder
 include("features/TileCoder.jl")
 
-export Learning
-include("learning/Learning.jl")
+export
+    RandomAgent
+include("agent/random.jl")
 
 
 end
