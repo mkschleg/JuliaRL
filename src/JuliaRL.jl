@@ -32,8 +32,11 @@ export
 include("core/feature_constructors.jl")
 
 export
-    TileCoder
+    TileCoder,
+    MinMaxNormalize,
+    MeanStdNormalize
 include("features/TileCoder.jl")
+include("features/Normalize.jl")
 
 export
     RandomAgent
