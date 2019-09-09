@@ -1,69 +1,46 @@
+
 module JuliaRL
 
-greet() = print("Hello Reinforcement Learning Julia!")
+using Random
+using Logging
 
-export FeatureCreators
-include("FeatureCreators.jl")
+greet() = println("Hello Reinforcement Learning!")
 
-export Learning
-include("Learning.jl")
-
-export ExperienceReplay, WeightedExperienceReplay, size, getindex, add!
-include("Replay.jl")
 
 export
     AbstractEnvironment,
-    MountainCar,
-    GymEnv,
-    start,
-    start!,
-    step!,
-    step,
-    get_reward,
-    get_state,
-    is_terminal,
     get_actions,
-    render
+    get_reward,
+    is_terminal,
+    AbstractAgent,
+    start!,
+    step!
 
-include("Environments.jl")
+include("core/environment.jl")
+include("core/agent.jl")
 
-export AbstractState
+export
+    GVF,
+    Horde,
+    GVFParamFuncs
+include("core/gvf.jl")
 
-abstract type AbstractState end
+export
+    AbstractFeatureConstructors,
+    create_features,
+    feature_size
+include("core/feature_constructors.jl")
 
-export AbstractPolicy, AbstractQPolicy, EpsilonGreedyQPolicy, get
+export
+    TileCoder,
+    MinMaxNormalize,
+    MeanStdNormalize
+include("features/TileCoder.jl")
+include("features/Normalize.jl")
 
-abstract type AbstractPolicy end
+export
+    RandomAgent
+include("agent/random.jl")
 
-abstract type AbstractQPolicy <: AbstractPolicy end
 
-mutable struct EpsilonGreedyQPolicy <: AbstractQPolicy
-    ϵ::Float64
-    actions::AbstractArray
 end
-
-function get(policy::AbstractQPolicy, values::AbstractArray; rng=Random.GLOBAL_RNG)
-    action = findmax(values)[2]
-    if rand(rng) < policy.ϵ
-        action = rand(rng, policy.actions)
-    end
-    return action
-end
-
-export Agent
-
-include("Agent.jl")
-
-export my_module
-
-module my_module
-export func
-
-"""
-    func(x)
-Returns double the number `x` plus `1`.
-"""
-func(x) = 2x + 1
-end
-
-end # module

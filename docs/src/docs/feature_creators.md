@@ -1,14 +1,11 @@
-# Feature Creators
+# Feature Constructors
 
-## Abstract API
-```@doc
-JuliaRL.FeatureCreators.AbstractFeatureCreator
-JuliaRL.FeatureCreators.create_features
-JuliaRL.FeatureCreators.feature_size
+
+```@meta
+CurrentModule = JuliaRL
 ```
 
-
-## TileCoder
-```@docs
-FeatureCreators.TileCoder
+```@autodocs
+Modules = [JuliaRL]
+Pages   = ["feature_constructors.jl"]
 ```

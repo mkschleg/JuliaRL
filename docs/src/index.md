@@ -1,6 +1,6 @@
 
 # JuliaRL.jl Documentation - WIP
 
-Current Working example: misc/test_linearqagent_mountaincar.jl
+This documentation is still a work in progress. We should have a finalized version for the initial release on the Julia package system.
 
-More examples and explanations to come
+
