@@ -42,5 +42,4 @@ export
     RandomAgent
 include("agent/random.jl")
 
-
 end
