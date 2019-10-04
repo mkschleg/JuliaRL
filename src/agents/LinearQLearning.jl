@@ -34,6 +34,7 @@ get_action(agent::LinearQAgent, ϕ; rng=Random.GLOBAL_RNG, kwargs...) = get(agen
 
 function start!(agent::LinearQAgent, env_s_tp1; rng=Random.GLOBAL_RNG, kwargs...)
 
+    
     agent.ϕ_t .= create_features(agent.fc, env_s_tp1)
     agent.action = get_action(agent, agent.ϕ_t; rng=rng)
 
@@ -67,7 +68,7 @@ function TileCoderAgent(opt::LearningUpdate,
                         tilings::Integer,
                         tiles::Integer,
                         γ::Float64,
-                        policy::AbstractQPolicy)
+                        policy::AbstractQPolicy, ϵ_init, rng)
 
     fc = FeatureCreators.TileCoder(tilings, tiles, size_env_state; wrap=false, wrapwidths=0.0)
     num_features_per_action = (tilings*(tiles+1)^size_env_state)
@@ -75,6 +76,11 @@ function TileCoderAgent(opt::LearningUpdate,
     Q = Learning.LinearRL.ActionSparseQFunction(
         num_features_per_action,
         num_actions)
+
+    Q.weights .= rand(rng, size(Q.weights)...)    
+    Q.weights .+= ϵ_init
+
+
     return LinearQAgent(Q, fc, policy, γ, opt)
 end
 

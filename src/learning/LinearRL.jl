@@ -174,7 +174,14 @@ watkins_q_target(q::AbstractQFunction, ϕ, r) = r + maximum(get_values(q, ϕ))
 
 function update!(value::AbstractQFunction, opt::WatkinsQ, ϕ_t, ϕ_tp1, r, γ, ρ, terminal, a_t, a_tp1=nothing, target_policy=nothing)
     α = opt.α
-    δ = watkins_q_target(value, ϕ_tp1, r) - value(ϕ_t, a_t)
+
+    δ = 0.0
+    if terminal
+        δ = r - value(ϕ_t, a_t)
+    else
+        δ = watkins_q_target(value, ϕ_tp1, r) - value(ϕ_t, a_t)
+    end
+
     Δθ = α.*δ
     update!(value, ϕ_t, a_t, Δθ)
 end
